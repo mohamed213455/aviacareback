@@ -1,18 +1,18 @@
 const mongoose = require('mongoose');
 
+const connectDB = async () => {
+    try {
+        //mongodb connection string
+        const con = await mongoose.connect('mongodb+srv://avia:care@cluster0.49qpsid.mongodb.net/?retryWrites=true&w=majority', {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+          });
+        console.log(`MongoDB connected :${con.connection.host}`);
+    } catch (err) {
+        console.log(err);
+        process.exit(1);
+    }
+}
+module.exports = connectDB
 
-mongoose.connect('mongodb://avia:care@host:27017/aviacare2', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
-
-const db = mongoose.connection;
-
-db.on('error', (error) => {
-  console.log(error);
-});
-
-db.once('open', () => {
-  console.log('MongoDB connection established successfully!');
-});
 
