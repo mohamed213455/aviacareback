@@ -79,20 +79,11 @@ exports.Login = async function (req, res) {
             return res.status(401).send('Verify Account');
         }
 
-        //Creating and assigning token
-        const token = jwt.sign(
-            {
-                ClientExist,
-            },
-            process.env.TOKEN_SECRET,
-            {
-                expiresIn: '30d',
-            }
-        );
+        
+        
         res.status(200).json({
             message: 'you are logged in',
             Client: ClientExist,
-            token,
         });
     } catch (error) {
         res.status(500).json({ error: error.message });
