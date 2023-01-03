@@ -41,9 +41,12 @@ const UserSchema = new mongoose.Schema({
     TypeUser:{
         type: Number
     },
+    Description:{
+        type: String
+    },
     AccountState: {
         type: Boolean,
-        default: true
+        default: false
     }
 
 }, { timestamps: true });

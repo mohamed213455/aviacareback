@@ -3,8 +3,11 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 //const verifytoken = require('../verifytoken');
 const Client = require('../Models/User');
+
 const nodemailer = require('nodemailer');
 const Appointment = require('../Models/Appointment');
+const cloudinary = require("../config/cloudinary");
+const User = require('../Models/User');
 
 exports.Register = async function (req, res) {
     try {
@@ -28,6 +31,7 @@ exports.Register = async function (req, res) {
             Image: req.body.Image,
             Maladies:req.body.State,
             prix:req.body.prix,
+            Description:req.body.Description,
             speciality:req.body.speciality,
             TypeUser:req.body.TypeUser,
             HomeAddress: req.body.HomeAddress,
@@ -275,3 +279,24 @@ exports.delete = (req, res) => {
             });
         });
 }
+
+exports.uploadpicture = async (req, res) => {
+    try {
+      const upload = await cloudinary.v2.uploader.upload(req.file.path);
+      const user = await Client.findByIdAndUpdate(
+        req.params.id,
+        { Image: upload.secure_url },
+        {
+          strictPopulate: false,
+          new: true,
+          useFindAndModify: false,
+        }
+      );
+  
+      return res.json({
+        image: upload.secure_url,
+      });
+    } catch (err) {
+      return res.status(500).json({ errors: err.message  });
+    }
+  };

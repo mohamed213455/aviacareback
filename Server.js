@@ -6,6 +6,10 @@ const connectDB = require('./Database/Connection')
 const cors = require('cors');
 
 
+const cloudinary = require("./config/cloudinary");
+const uploader = require("./config/multer");
+
+
 const app = express();
 
 dotenv.config({ path: 'config.env' })
@@ -21,6 +25,14 @@ connectDB();
 //parse request to body-parser
 app.use(bodyparser.urlencoded({ extended: false }))
 app.use(bodyparser.json())
+
+app.post("/upload", uploader.single("image"), async (req, res) => {
+    const upload = await cloudinary.v2.uploader.upload(req.file.path);
+    return res.json({
+      success: true,
+      file: upload.secure_url,
+    });
+  });
 
 //load routers
 app.use("/User", require('./Routes/UserRouter'));

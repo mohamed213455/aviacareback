@@ -15,9 +15,15 @@ exports.createAppointment = async(req, res) => {
   const appointment = new Appointment({
     iduser1: id1,
     iduser2: id2,
+    patientfullname: req.body.patientfullname,
+    caregiverfullname: req.body.caregiverfullname,
+    homeAddress: req.body.homeAddress,
     date: req.body.date,
     hour: req.body.hour,
-    price: req.body.price
+    price: req.body.price,
+    ImageCaregiver: req.body.ImageCaregiver,
+    ImagePatient: req.body.ImagePatient,
+    status:req.body.status
   });
 
   console.log(appointment)
@@ -38,6 +44,18 @@ exports.createAppointment = async(req, res) => {
   ).populate({
     path: "appointments",
   });
+
+  const user2= await User.findByIdAndUpdate( id1,
+    { $push: { appointments: appointment._id} },
+    {
+      strictPopulate: false,
+      new: true,
+      useFindAndModify: false,
+    }
+  ).populate({
+    path: "appointments",
+  });
+  
   res.status(201).json({user});
 };
 
@@ -60,6 +78,26 @@ exports.getAppointments = async(req, res) => {
  // res.status(200).json(appointments);
 
     };
+
+    exports.getAppointments2 = async(req, res) => {
+      const iduser1 = req.query.iduser1;
+      try {
+        
+       const appointments = await User.findById(iduser1).populate('appointments');
+      // const appointments = await User.find("iduser2").populate('appointments');
+       //const appointments = await Appointment.find({iduser2: iduser2}).populate({path:"iduser1"});
+       //const appointments = await User.findById(iduser2).populate('appointments');
+        
+        res.json(appointments.appointments);
+      } catch (err) {
+        res.status(500).send(err);
+      }
+      
+      console.log(iduser1);
+      //const appointments = await Appointment.find({iduser2: iduser2}).populate({path:"iduser1"});
+     // res.status(200).json(appointments);
+    
+        };
 
     exports.delete = (req, res) => {
       const id = req.params.id;

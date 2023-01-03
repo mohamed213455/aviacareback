@@ -17,7 +17,31 @@ hour: {
 },
 price: {
   type: String
+},
+patientfullname : {
+  type: String
+
+},
+caregiverfullname : {
+  type: String
+
+},
+homeAddress : {
+  type: String
+
+},
+ImagePatient : {
+  type: String
+
+},
+ImageCaregiver: {
+  type: String
+
+},
+status : {
+  type : String
 }
+
 
    
     
