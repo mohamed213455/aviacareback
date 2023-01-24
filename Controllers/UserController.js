@@ -103,14 +103,14 @@ const SendingCode = async function (email) {
         port: 587, // port for secure SMTP
 
         auth: {
-            user: 'aviacare23@outlook.com',
+            user: 'aviacare33@outlook.com',
             pass: 'Mohamedkalech123',
         },
     });
 
     // setup e-mail data, even with unicode symbols
     var mailOptions = {
-        from: '"Avia Care"' + 'aviacare23@outlook.com', // sender address (who sends)
+        from: '"Avia Care"' + 'aviacare33@outlook.com', // sender address (who sends)
         to: email, // list of receivers (who receives)
         subject: 'Verification Number', // Subject line
         text: 'Verify your Account', // plaintext body
@@ -141,13 +141,13 @@ exports.ResendCode = async function (req, res) {
             port: 587, // port for secure SMTP
 
             auth: {
-                user: 'aviacare23@outlook.com',
+                user: 'aviacare33@outlook.com',
                 pass: 'Mohamedkalech123',
             },
         });
         // setup e-mail data, even with unicode symbols
         var mailOptions = {
-            from: '"Avia Care"' + 'aviacare23@outlook.com',  // sender address (who sends)
+            from: '"Avia Care"' + 'aviacare33@outlook.com',  // sender address (who sends)
             to: req.body.Email, // list of receivers (who receives)
             subject: 'Verification Number', // Subject line
             text: 'Verify your Account', // plaintext body
